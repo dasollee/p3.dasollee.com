@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+<!-- This is an integer converter that allows users to convert binary, decimal, or hexadecimal into 
+binary, decimal, hexadecimal, and ascii text. In comparison to the example shown in project instruction page,
+I've added ascii text conversion which shows any ascii character in between decimal 33 and 136. -->
 <html>
 	<head>
 		<meta charset="UTF-8"/>
@@ -44,7 +47,8 @@
 					$(".value").val("");
 					flag=false;
 				}
-
+				
+				//If there is something in the input field, use the switch to convert the data accordingly.
 				if(flag){
 					switch(index){
 					//Binary -> other values
