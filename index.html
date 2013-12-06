@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<script src="jquery-1.10.2.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="stylesheet.css"/>
+		<link href='http://fonts.googleapis.com/css?family=Electrolize' rel='stylesheet' type='text/css'/>
+		<title>Integer Converter</title>
+	</head>
+	<body>
+		<div id='back-area'>
+			<div id='display-title'>Integer Converter</div>
+			<div id='display-area'>
+					<div id='binary'>
+						<span class='val-title'>BINARY</span><br/>	
+						<input class='value' id='binary-val' type='text'/>
+					</div>
+					<div id='decimal'>
+						<span class='val-title'>DECIMAL</span><br/>
+						<input class='value' id='decimal-val' type='text'/>
+					</div>
+					<div id='hexadecimal'>
+						<span class='val-title'>HEXADECIMAL</span><br/> 
+						<input class='value' id='hexadecimal-val' type='text'/>
+					</div>
+                    <div id='text'>
+                    	<span class='val-title'>ASCII TEXT (between decimal 33 and 126)</span><br/>
+                        <input class='value' id='text-val' type='text'/>
+                    </div>
+			</div><!-- display-area -->
+		</div><!-- back-area -->
+		
+		<script type='text/javascript'>
+		/*-------------------------------------------------------------------------------------------------
+		javascript and jQuery to convert typed value (binary, decimal, hexadecimal, or ascii text) into other values
+		-------------------------------------------------------------------------------------------------*/		
+			//function activated upon keyup event in jQuery
+			$(".value").keyup(function(event){
+				var index=$(this).attr("id").substr(0,1);
+				var temp=$(this).val();
+				var decimal, binary, hexadecimal, text;
+				var flag=true;
+				if($(this).val()==""){
+					$(".value").val("");
+					flag=false;
+				}
+
+				if(flag){
+					switch(index){
+					//Binary -> other values
+					case 'b' : 
+						decimal=parseInt(temp,2).toString(10); 
+						hexadecimal=parseInt(temp,2).toString(16); 
+						text=Hex2ascii(hexadecimal);
+						$("#decimal-val").val(decimal); 
+						$("#hexadecimal-val").val(hexadecimal); 
+						$("#text-val").val(text);
+						break;
+					//Decimal -> other values	
+					case 'd' :
+						hexadecimal=parseInt(temp,10).toString(16); 
+						binary=parseInt(temp).toString(2); 
+						text=Hex2ascii(hexadecimal);
+						$("#binary-val").val(binary); 
+						$("#hexadecimal-val").val(hexadecimal); 
+						$("#text-val").val(text);
+						break;
+					//Hexadecimal -> other values	
+					case 'h' :
+						binary=parseInt(temp,16).toString(2); 
+						decimal=parseInt(temp,16).toString(10); 
+						text=Hex2ascii(temp);
+						$("#binary-val").val(binary); 
+						$("#decimal-val").val(decimal); 
+						$("#text-val").val(text);
+						break;
+					}
+				}
+				else {
+					$(this).val(temp);
+				}
+			});
+			
+			//function to convert hexadecimal to ASCII text in between decimal 33 and 126
+			function Hex2ascii(hex){
+				var str='';
+				for (var i = 0; i < hex.length; i += 2)
+			        str += String.fromCharCode(parseInt(hex.substr(i, 2), 16));
+			    return str;
+			}
+		</script>
+	</body>
+</html>
+
